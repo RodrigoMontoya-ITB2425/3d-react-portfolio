@@ -13,9 +13,9 @@
     <meta property="og:type" content="website">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/loader.css">
-    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="/css/loader.css">
+    <link rel="stylesheet" href="/css/menu.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -151,15 +151,21 @@
     </div>
 
     <!-- External Scripts -->
-    <script src="js/buttons.js"></script>
-    <script type="module" src="js/sanity.js"></script>
-    <script type="module" src="js/3D.js"></script>
-    <script src="js/DRACOLoader.js"></script>
-    <script src="js/GLTFLoader.js"></script>
-    <script src="js/MeshSurfaceSampler.js"></script>
-    <script src="js/OrbitControls.js"></script>
-    <script src="js/three.js"></script>
-    <script src="js/tween.module.min.js"></script>
+<!-- Primero carga Three.js y sus dependencias -->
+<script src="js/three.js"></script>
+<script src="js/OrbitControls.js"></script>
+<script src="js/GLTFLoader.js"></script>
+<script src="js/DRACOLoader.js"></script>
+<script src="js/MeshSurfaceSampler.js"></script>
+
+<!-- Luego carga los scripts de la lógica de tu aplicación -->
+<script src="js/buttons.js"></script>
+<script type="module" src="js/sanity.js"></script>
+<script type="module" src="js/3D.js"></script>
+
+<!-- Asegúrate de cargar cualquier otro script de utilidad como tween.js al final -->
+<script src="js/tween.module.min.js"></script>
+
 
 </body>
 </html>
