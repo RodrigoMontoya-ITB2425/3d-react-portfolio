@@ -8,14 +8,14 @@
     <!-- SEO Metadata -->
     <meta property="og:title" content="Rodrigo's World">
     <meta property="og:image" content="img/rodrigosworld_thumbnail.jpg">
-    <meta property="og:description" content="Portfolio">
-    <meta property="og:url" content="https://RodrigoMontoya-ITB2425.github.io/">
+    <meta property="og:description" content="Portfolio Rodrigo von Hofen">
+    <meta property="og:url" content="https://rodrigomontoya-itb2425.github.io/Portfolio/">
     <meta property="og:type" content="website">
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/css/loader.css">
-    <link rel="stylesheet" href="/css/menu.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/loader.css">
+    <link rel="stylesheet" href="css/menu.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
 <body>
 
     <!-- Loading Screen -->
-    <div id="loadingscreen">  
+    <div id="loadingscreen">
         <div id="loader-wrapper">
             <div class="title">Welcome to my world!</div>
             <h1 style="text-align: right;">I'm Rodrigo, an Interaction Designer enthusiastic about creating engaging and delightful digital experiences.</h1>
@@ -33,7 +33,7 @@
                 <span id="loading">Loading...</span>
                 <div id="progress-bar"></div>
             </div>
-            <button class="button cta" id="start-button" style="display: none;">Explore my world <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="button cta" id="start-button" href="#start" style="display: none;">Explore my world <i class="fa-solid fa-arrow-right"></i></button>
         </div>
     </div>
 
@@ -48,10 +48,10 @@
             <span></span>
             <span></span>
             <ul id="menu">
-                <a href="index.html"><li class="active">Rodrigo's World</li></a>
-                <a href="about.html"><li>About</li></a>
-                <a href="legal.html"><li>Legal</li></a>
-                <a href="contact.html"><li>Contact</li></a>
+                <a href="./index.html"><li class="active">Rodrigo's World</li></a>
+                <a href="./about.html"><li>About</li></a>
+                <a href="./legal.html"><li>Legal</li></a>
+                <a href="./contact.html"><li>Contact</li></a>
             </ul>
         </div>
     </nav>
@@ -63,20 +63,21 @@
         <i id="sun" class="icon fa fa-lightbulb fa-xl"></i>
     </label>
 
-    <!-- Main Content -->
+    <!-- Canvas for 3D Content (Three.js) -->
     <canvas class="webgl"></canvas>
 
+    <!-- Instructions -->
     <div class="sign" id="instructions">
         <div id="animation"></div>
         <div class="helptext"><span>Drag to explore</span></div>
     </div>
 
-    <!-- Popup Content -->
+    <!-- Popup Content for Projects -->
     <div class="popup sign hidden">
         <p>My journey as a designer started in Germany, where I studied Communication Design.</p>
     </div>
 
-    <!-- Projects -->
+    <!-- Example Project -->
     <div class="popup project hidden">
         <div class="content">
             <img class="thumbnail">
@@ -106,7 +107,7 @@
         </p>
     </div>
 
-    <!-- Modals for Project Details -->
+    <!-- Project Modals (for more details on each project) -->
     <div class="modal" id="myModal1">
         <div class="header">
             <div class="header-wrapper"><div class="title projectheadline"></div></div>
@@ -119,7 +120,22 @@
             </div>
         </div>
     </div>
-    <!-- Modals for Project Details (continued) -->
+
+    <!-- External Scripts (to be included after page content) -->
+    <script src="js/buttons.js"></script>
+    <script type="module" src="js/sanity.js"></script>
+    <script type="module" src="js/3D.js"></script>
+    <script src="js/DRACOLoader.js"></script>
+    <script src="js/GLTFLoader.js"></script>
+    <script src="js/MeshSurfaceSampler.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/three.js"></script>
+    <script src="js/tween.module.min.js"></script>
+
+</body>
+</html>
+
+    <!-- Modals for Project Details -->
     <div class="modal" id="myModal2">
         <div class="header">
             <div class="header-wrapper"><div class="title projectheadline"></div></div>
@@ -127,6 +143,9 @@
         </div>
         <div class="modal-content-wrapper">
             <h1 class="modal-subtitle"></h1>
+            <div class="embed-container">
+                <iframe class="video" src="https://player.vimeo.com/video/190451314?h=5b038d6e31" width="640" height="360" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 
@@ -137,6 +156,9 @@
         </div>
         <div class="modal-content-wrapper">
             <h1 class="modal-subtitle"></h1>
+            <div class="embed-container">
+                <iframe class="video" src="https://player.vimeo.com/video/190451314?h=5b038d6e31" width="640" height="360" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 
@@ -147,27 +169,25 @@
         </div>
         <div class="modal-content-wrapper">
             <h1 class="modal-subtitle"></h1>
+            <div class="embed-container">
+                <iframe class="video" src="https://player.vimeo.com/video/190451314?h=5b038d6e31" width="640" height="360" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 
-    <!-- External Scripts -->
-<!-- Primero carga Three.js y sus dependencias -->
-<script src="js/three.js"></script>
-<script src="js/OrbitControls.js"></script>
-<script src="js/GLTFLoader.js"></script>
-<script src="js/DRACOLoader.js"></script>
-<script src="js/MeshSurfaceSampler.js"></script>
-
-<!-- Luego carga los scripts de la lógica de tu aplicación -->
-<script src="js/buttons.js"></script>
-<script type="module" src="js/sanity.js"></script>
-<script type="module" src="js/3D.js"></script>
-
-<!-- Asegúrate de cargar cualquier otro script de utilidad como tween.js al final -->
-<script src="js/tween.module.min.js"></script>
-
+    <!-- External Scripts (continued) -->
+    <script src="js/buttons.js"></script>
+    <script type="module" src="js/sanity.js"></script>
+    <script type="module" src="js/3D.js"></script>
+    <script src="js/DRACOLoader.js"></script>
+    <script src="js/GLTFLoader.js"></script>
+    <script src="js/MeshSurfaceSampler.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/three.js"></script>
+    <script src="js/tween.module.min.js"></script>
 
 </body>
 </html>
+
 
 

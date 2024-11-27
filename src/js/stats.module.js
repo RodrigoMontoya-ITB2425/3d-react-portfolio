@@ -1,83 +1,109 @@
-class Stats {
+var Stats = function () {
 
-	constructor() {
-		this.mode = 0;
+	var mode = 0;
 
-		this.container = document.createElement('div');
-		this.container.style.cssText = 'position:fixed;top:0;left:0;cursor:pointer;opacity:0.9;z-index:10000';
-		this.container.addEventListener('click', (event) => {
-			event.preventDefault();
-			this.showPanel(++this.mode % this.container.children.length);
-		}, false);
+	var container = document.createElement( 'div' );
+	container.style.cssText = 'position:fixed;top:0;left:0;cursor:pointer;opacity:0.9;z-index:10000';
+	container.addEventListener( 'click', function ( event ) {
 
-		this.beginTime = (performance || Date).now();
-		this.prevTime = this.beginTime;
-		this.frames = 0;
+		event.preventDefault();
+		showPanel( ++ mode % container.children.length );
 
-		this.fpsPanel = this.addPanel(new Stats.Panel('FPS', '#0ff', '#002'));
-		this.msPanel = this.addPanel(new Stats.Panel('MS', '#0f0', '#020'));
+	}, false );
 
-		if (window.performance && window.performance.memory) {
-			this.memPanel = this.addPanel(new Stats.Panel('MB', '#f08', '#201'));
-		}
+	//
 
-		this.showPanel(0);
-	}
+	function addPanel( panel ) {
 
-	addPanel(panel) {
-		this.container.appendChild(panel.dom);
+		container.appendChild( panel.dom );
 		return panel;
+
 	}
 
-	showPanel(id) {
-		for (let i = 0; i < this.container.children.length; i++) {
-			this.container.children[i].style.display = i === id ? 'block' : 'none';
+	function showPanel( id ) {
+
+		for ( var i = 0; i < container.children.length; i ++ ) {
+
+			container.children[ i ].style.display = i === id ? 'block' : 'none';
+
 		}
-		this.mode = id;
+
+		mode = id;
+
 	}
 
-	begin() {
-		this.beginTime = (performance || Date).now();
+	//
+
+	var beginTime = ( performance || Date ).now(), prevTime = beginTime, frames = 0;
+
+	var fpsPanel = addPanel( new Stats.Panel( 'FPS', '#0ff', '#002' ) );
+	var msPanel = addPanel( new Stats.Panel( 'MS', '#0f0', '#020' ) );
+
+	if ( self.performance && self.performance.memory ) {
+
+		var memPanel = addPanel( new Stats.Panel( 'MB', '#f08', '#201' ) );
+
 	}
 
-	end() {
-		this.frames++;
+	showPanel( 0 );
 
-		const time = (performance || Date).now();
+	return {
 
-		this.msPanel.update(time - this.beginTime, 200);
+		REVISION: 16,
 
-		if (time >= this.prevTime + 1000) {
-			this.fpsPanel.update((this.frames * 1000) / (time - this.prevTime), 100);
+		dom: container,
 
-			this.prevTime = time;
-			this.frames = 0;
+		addPanel: addPanel,
+		showPanel: showPanel,
 
-			if (this.memPanel) {
-				const memory = performance.memory;
-				this.memPanel.update(memory.usedJSHeapSize / 1048576, memory.jsHeapSizeLimit / 1048576);
+		begin: function () {
+
+			beginTime = ( performance || Date ).now();
+
+		},
+
+		end: function () {
+
+			frames ++;
+
+			var time = ( performance || Date ).now();
+
+			msPanel.update( time - beginTime, 200 );
+
+			if ( time >= prevTime + 1000 ) {
+
+				fpsPanel.update( ( frames * 1000 ) / ( time - prevTime ), 100 );
+
+				prevTime = time;
+				frames = 0;
+
+				if ( memPanel ) {
+
+					var memory = performance.memory;
+					memPanel.update( memory.usedJSHeapSize / 1048576, memory.jsHeapSizeLimit / 1048576 );
+
+				}
+
 			}
-		}
 
-		return time;
-	}
+			return time;
 
-	update() {
-		this.beginTime = this.end();
-	}
+		},
 
-	get dom() {
-		return this.container;
-	}
+		update: function () {
 
-	get domElement() {
-		return this.container;
-	}
+			beginTime = this.end();
 
-	setMode(id) {
-		this.showPanel(id);
-	}
-}
+		},
+
+		// Backwards Compatibility
+
+		domElement: container,
+		setMode: showPanel
+
+	};
+
+};
 
 Stats.Panel = function ( name, fg, bg ) {
 

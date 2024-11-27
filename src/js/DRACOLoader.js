@@ -4,7 +4,6 @@ import {
 	FileLoader,
 	Loader
 } from '/js/three.js';
-import DracoDecoderModule from 'path/to/draco_decoder_module.js'; // Add this line to import DracoDecoderModule
 
 const _taskCache = new WeakMap();
 
@@ -272,7 +271,7 @@ class DRACOLoader extends Loader {
 
 	}
 
-	async _getWorker( taskID, taskCost ) {
+	_getWorker( taskID, taskCost ) {
 
 		return this._initDecoder().then( () => {
 

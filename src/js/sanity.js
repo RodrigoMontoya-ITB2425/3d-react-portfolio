@@ -33,7 +33,7 @@ fetch(URL)
                 modal[i].innerHTML += '<h1>' + result[i].sections[b].input + '</h1>';
             }
             if (result[i].sections[b]._type == 'text-field'){
-                modal[i].innerHTML += '<p>' + result[i].sections[b].input + '</p>';
+                modal[i].innerHTML += '<p2>' + result[i].sections[b].input + '</p2>';
             }
             if (result[i].sections[b]._type == "product-image"){
                 let newImg = document.createElement('img');
