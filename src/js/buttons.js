@@ -27,5 +27,5 @@ function copy() {
   navigator.clipboard.writeText("joshua.vonhofen@gmail.com")  .then(() => alert("E-mail copied!"));
   
   // Alert the copied text
-  //alert("E-mail copied!");
+  //alert("E-mail copied!");n 
 }
