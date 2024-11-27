@@ -166,14 +166,18 @@
 <img src="img/swipe_animation.svg" alt="Swipe Animation">
 
     <!-- External Scripts (to be included after page content) -->
-    <script src="src/js/buttons.js"></script>
-    <script type="module" src="src/js/sanity.js"></script>
-    <script type="module" src="src/js/3D.js"></script>
-    <script src="src/js/DRACOLoader.js"></script>
-    <script src="src/js/GLTFLoader.js"></script>
-    <script src="src/js/MeshSurfaceSampler.js"></script>
-    <script src="src/js/OrbitControls.js"></script>
-    <script src="src/js/three.js"></script>
-    <script src="src/js/tween.module.min.js"></script>
+<script type="module" src="js/DRACOLoader.js"></script>
+<script type="module" src="js/GLTFLoader.js"></script>
+<script type="module" src="js/OrbitControls.js"></script>
+<script type="module" src="js/three.js"></script>
+<script type="module" src="js/MeshSurfaceSampler.js"></script>
+<script type="module" src="js/tween.module.min.js"></script>
+
+<!-- Importing three.js from CDN -->
+<script type="module">
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.145.0/build/three.module.js';
+</script>
+
+    
 </body>
 </html>
