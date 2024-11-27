@@ -2,7 +2,6 @@ import * as THREE from '/js/three.js';
 import { GLTFLoader } from '/js/GLTFLoader.js';
 import { OrbitControls } from '/js/OrbitControls.js';
 import { DRACOLoader } from '/js/DRACOLoader.js';
-import Stats from '/js/stats.module.js';
 import { MeshSurfaceSampler } from '/js/MeshSurfaceSampler.js';
 import { TWEEN } from '/js/tween.module.min.js';
 
@@ -29,16 +28,8 @@ const scene = new THREE.Scene()
  */
 const loadingManager = new THREE.LoadingManager();
 
-const progressContainer = document.getElementById("progress");
-const progressBar = document.getElementById("progress-bar");
-
-loadingManager.onProgress = function(url, loaded, total) {
-    progressBar.style.width = (loaded / total) * 100 + "%";
-}
-loadingManager.onLoad = function(url, loaded, total){
-    progressContainer.style.display = "none";
+loadingManager.onLoad = function(){
     document.getElementById("start-button").style.display = "block";
-    
 }
 
 // Draco loader
@@ -555,7 +546,7 @@ else {
     checkCheckbox();
 }
 
-checkbox.addEventListener('change', (event) => {
+checkbox.addEventListener('change', () => {
     checkCheckbox();
 })
 
@@ -563,10 +554,9 @@ checkbox.addEventListener('change', (event) => {
  * Animate
  */
 let azimuthalAngle;
-let cyclePos = 0;
-let i = 0;
-let g = 0.8;
-
+checkbox.addEventListener('change', () => {
+    checkCheckbox();
+})
 const popups = document.getElementsByClassName("popup");
 const clock = new THREE.Clock(); 
 
@@ -574,7 +564,6 @@ const clock = new THREE.Clock();
 
 const tick = () =>
  {
-    // Update controls
     controls.update()
 
     if ( car ) {
@@ -645,4 +634,4 @@ const tick = () =>
      window.requestAnimationFrame(tick)
  }
  
- tick()
+ tick();

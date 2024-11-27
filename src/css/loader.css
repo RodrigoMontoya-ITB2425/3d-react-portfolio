@@ -42,7 +42,7 @@
   font-weight: 600;
   letter-spacing: .5px;
   text-transform: uppercase;  
-  color: black;
+  color: white;
   
   position: absolute;
   top: 50%;
@@ -64,10 +64,10 @@
 }
 
 @media only screen and (max-width: 600px) {
-.cta {
-  width: 100%;
-}
-#progress {
-  width: 100%;
-}
+  .cta {
+    width: 100%;
+  }
+  #progress {
+    width: 100%;
+  }
 }
