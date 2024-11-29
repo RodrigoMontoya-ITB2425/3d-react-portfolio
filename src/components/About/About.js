@@ -46,16 +46,7 @@ const About = () => {
           it works" - Steve Jobs
         </p>
         <p className={styles.description}>
-          I have always had an affinity for technology and the arts, a chemistry
-          I gratefully utilize today as a developer. I have a serious passion
-          for creating dynamic digital experiences and intuitive user interfaces
-          while allowing seamless front-end integration to back-end systems.
-          Minimalism and "less is more" have always been my philosophy on
-          removing unnecessary distractions that would keep me from exuding my
-          creativity and products from executing its idea effectively. I am
-          interested in anything coding or design related, from software
-          engineering to UI/UX, and look forward to working on incredible projects
-          with positive people.
+          Desde siempre me ha apasionado la física, las matemáticas y la tecnología. Me encanta entender cómo funcionan las cosas y encontrar soluciones creativas a los problemas. Además, el fútbol es una de mis grandes pasiones, no solo porque disfruto jugarlo, sino porque me enseña mucho sobre trabajo en equipo y estrategia. Me interesa todo lo relacionado con la tecnología, desde aprender a programar hasta entender cómo se diseñan las cosas que usamos todos los días. Estoy emocionado por seguir aprendiendo y trabajar en proyectos que combinen mis intereses y me permitan crecer junto a personas positivas.
         </p>
       </div>
     </div>
