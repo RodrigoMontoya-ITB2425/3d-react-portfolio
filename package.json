@@ -13,7 +13,6 @@
     "@emailjs/browser": "^4.4.1",
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
-    "@material-ui/core": "^4.12.4",
     "@mui/material": "^6.1.9",
     "@react-three/drei": "^9.118.0",
     "@react-three/fiber": "^8.17.10",
