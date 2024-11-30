@@ -2,9 +2,22 @@ let menuIcon=document.querySelector('#menu-icon');
 let navbar=document.querySelector('.navbar');
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/controls/OrbitControls.js';
 
 // Configuración básica
 const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0x000000, 0); // Fondo transparente
+document.body.appendChild(renderer.domElement);
+
+// Después de la configuración básica de la cámara y el renderizador
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; // Habilita el efecto de desaceleración suave
+controls.dampingFactor = 0.25; // Controla la velocidad de desaceleración
+controls.screenSpacePanning = false; // Evita el desplazamiento hacia abajo
+controls.maxPolarAngle = Math.PI / 2; // Limita la rotación vertical (evita voltear el modelo)
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -18,7 +31,7 @@ scene.add(light);
 // Carga del modelo 3D
 const loader = new GLTFLoader();
 loader.load(
-    'model.glb', // Ruta al archivo GLB
+    'assets/Planeta/scene.gltf', // Ruta al archivo GLB
     (gltf) => {
         const model = gltf.scene;
         model.scale.set(0.5, 0.5, 0.5); // Ajusta el tamaño
