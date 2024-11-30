@@ -1,5 +1,53 @@
 let menuIcon=document.querySelector('#menu-icon');
 let navbar=document.querySelector('.navbar');
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js';
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/loaders/GLTFLoader.js';
+
+// Configuración básica
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0x000000, 0); // Fondo transparente
+document.body.appendChild(renderer.domElement);
+
+// Luz
+const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1);
+scene.add(light);
+
+// Carga del modelo 3D
+const loader = new GLTFLoader();
+loader.load(
+    'model.glb', // Ruta al archivo GLB
+    (gltf) => {
+        const model = gltf.scene;
+        model.scale.set(0.5, 0.5, 0.5); // Ajusta el tamaño
+        model.rotation.y = Math.PI;    // Rota el modelo si es necesario
+        scene.add(model);
+
+        // Animación
+        const animate = () => {
+            requestAnimationFrame(animate);
+            model.rotation.y += 0.01; // Gira el modelo lentamente
+            renderer.render(scene, camera);
+        };
+        animate();
+    },
+    undefined,
+    (error) => {
+        console.error('Error al cargar el modelo:', error);
+    }
+);
+
+// Posiciona la cámara
+camera.position.z = 5;
+
+// Responsividad
+window.addEventListener('resize', () => {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+});
 
 menuIcon.onclick=()=>{
     menuIcon.classList.toggle('bx-x');
