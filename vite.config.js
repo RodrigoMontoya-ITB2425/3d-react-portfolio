@@ -24,7 +24,7 @@ export default defineConfig({
     // Esto afectará las rutas de los assets durante la construcción.
     outDir: 'dist', // Directorio de salida de la construcción
   },
-  base: "/3d-react-portfolio", // Esto asegura que se sirva desde una subcarpeta específica
+  base: "/3d-react-portfolio/", // Esto asegura que se sirva desde una subcarpeta específica
   css: {
     postcss: {
       plugins: [
