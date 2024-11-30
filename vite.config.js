@@ -3,9 +3,9 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/Portfolio/', // Adjust based on your project path
   plugins: [react()],
-  server: {
-    port: 3000,
-  },
+    build: {
+        chunkSizeWarningLimit: 100000000
+    },
+    base: "/3d-react-portfolio",
 })
