@@ -17,6 +17,7 @@
     "@emailjs/browser": "^3.11.0",
     "@react-three/drei": "^9.88.13",
     "@react-three/fiber": "^8.15.10",
+    "caniuse-lite": "^1.0.30001684",
     "framer-motion": "^10.16.4",
     "gh-pages": "^5.0.0",
     "ityped": "^1.0.3",
