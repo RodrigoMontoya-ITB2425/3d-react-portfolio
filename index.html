@@ -52,14 +52,11 @@
         </section>
         <section class="services"id="services">
             <h2 class="heading">Our<span>Services</span></h2>
-
             <div class="services-container">
                 <div class="services-box">
                     <i class='bx bx-code-alt'></i>
                     <h3>Web Development</h3>
-                    <p>Motivated designer and developer
-                         with experience creating custom websites through PHP and CSS. 
-                         Strong collaboration skills and proven history of application development. DHTML and JavaScript. MS Access and MySQL.</p>
+                    <p>Motivated designer and developer with experience creating custom websites through PHP and CSS. Strong collaboration skills and proven history of application development. DHTML and JavaScript. MS Access and MySQL.</p>
                     <a href="#"class="btn">Read More</a>
                 </div>
         
@@ -73,8 +70,7 @@
                 <div class="services-box">
                     <i class='bx bxl-instagram-alt' ></i>
                     <h3>App Design</h3>
-                    <p>I'm UI/UX Designer with a great passion to my work. The main goal is to create modern, attractive and user-friendly interfaces and find creative and simple solutions for your business.
-                        </p>
+                    <p>I'm UI/UX Designer with a great passion to my work. The main goal is to create modern, attractive and user-friendly interfaces and find creative and simple solutions for your business.</p>
                     <a href="#"class="btn">Read More</a>
                 </div>
             </div>
@@ -115,21 +111,33 @@
                     </div>
                 </div>
             </div>
+            <!-- Sketchfab Model Embed -->
+            <div class="sketchfab-embed-wrapper">
+                <iframe title="Gaming Desktop PC" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/d1d8282c9916438091f11aeb28787b66/embed?ui_theme=dark"> </iframe>
+                <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;">
+                    <a href="https://sketchfab.com/3d-models/gaming-desktop-pc-d1d8282c9916438091f11aeb28787b66?utm_medium=embed&utm_campaign=share-popup&utm_content=d1d8282c9916438091f11aeb28787b66" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;">
+                        Gaming Desktop PC
+                    </a> by 
+                    <a href="https://sketchfab.com/Yolala3d?utm_medium=embed&utm_campaign=share-popup&utm_content=d1d8282c9916438091f11aeb28787b66" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;">
+                        Yolala3D | Y3D
+                    </a> on 
+                    <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=d1d8282c9916438091f11aeb28787b66" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a>
+                </p>
+            </div>
         </section>
         <section class="contact"id="contact">
             <h2 class="heading">Contact<span>ME!</span></h2>
-
             <form action="#" name="submit-to-google-sheet">
                 <div class="input-box">
                     <input type="text" name="Name" placeholder="Full Name">
                     <input type="email" name="Email Address" placeholder="Email Address">
                 </div>
                 <div class="input-box">
-                    <input type="number" name="Mobile Number"placeholder="Mobile Number">
-                    <input type="text"name="Email Subject" placeholder="Email Subject">
+                    <input type="number" name="Mobile Number"placeholder="Mobile Number
+                    <input type="text" name="Email Subject" placeholder="Email Subject">
                 </div>
-                <textarea name="Your Message" id="" cols="30" rows="10"placeholder="Your Message"></textarea>
-                <input type="submit" value="Send Message"class="btn">
+                <textarea name="Your Message" id="" cols="30" rows="10" placeholder="Your Message"></textarea>
+                <input type="submit" value="Send Message" class="btn">
             </form>
             <span id="msg"></span>
         </section>
@@ -139,32 +147,30 @@
                 <p>Copyright &copy; 2023 by Shreya | All Rights Reserved.</p>
             </div>
             <div class="footer-iconTop">
-                <a href="#home"><i class='bx bx-up-arrow-alt' ></i></a>
+                <a href="#home"><i class='bx bx-up-arrow-alt'></i></a>
             </div>
         </footer>
 
         <script src="https://unpkg.com/scrollreveal"></script>
-
         <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
         <script src="script.js"></script>
         <script>
             const scriptURL = 'https://script.google.com/macros/s/AKfycbzFPVGxI-75Ilkm2z_EMuI9ubPlp8-7dQmMzzdPiIunLPPzj3bcY1ohMdT_DfZ3zPwhTA/exec'
             const form = document.forms['submit-to-google-sheet']
-            const msg=document.getElementById("msg")
+            const msg = document.getElementById("msg")
           
             form.addEventListener('submit', e => {
               e.preventDefault()
               fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
-                    msg.innerHTML="Message sent successfully"
+                    msg.innerHTML = "Message sent successfully"
                     setTimeout(function(){
-                        msg.innerHTML=""
-                    },5000)
+                        msg.innerHTML = ""
+                    }, 5000)
                     form.reset()
                 })
                 .catch(error => console.error('Error!', error.message))
             })
-          </script>
-        
+        </script>
     </body>
 </html>
