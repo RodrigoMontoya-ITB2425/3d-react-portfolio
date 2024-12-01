@@ -130,53 +130,13 @@ loader.load('modelo/planet.gltf', (gltf) => {
     console.error('Error al cargar el modelo GLTF:', error);
 });
 
-// Raycaster y el mouse
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-
-// Función para actualizar la posición del ratón
-function onMouseMove(event) {
-    // Convierte las coordenadas del mouse a coordenadas normalizadas del espacio de la ventana (-1 a +1)
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-}
-
-// Detectar clics
-function onMouseClick(event) {
-    raycaster.update();
-
-    // Calculamos los objetos que están bajo el cursor
-    const intersects = raycaster.intersectObjects(scene.children);
-
-    // Si el planeta es clickeado, cambiará su color y la opacidad de las nubes
-    if (intersects.length > 0) {
-        const object = intersects[0].object;
-        if (object === planetMesh || object === planet) {
-            // Cambiar color del planeta a aleatorio
-            planetMesh.material.color.set(Math.random(), Math.random(), Math.random());
-
-            // Cambiar color y opacidad de las nubes
-            planet.traverse((child) => {
-                if (child.isMesh && child.material.map === cloudsTexture) {
-                    child.material.color.set(Math.random(), Math.random(), Math.random()); // Color aleatorio
-                    child.material.opacity = Math.random(); // Opacidad aleatoria
-                }
-            });
-        }
-    }
-}
-
 // Animar la rotación del planeta
-let rotationSpeed = 0.01; // Velocidad inicial de rotación
 function animate() {
     requestAnimationFrame(animate);
 
     if (planet) {
-        planet.rotation.y += rotationSpeed; // Rotar el planeta sobre su eje Y
+        planet.rotation.y += 0.01; // Rotar el planeta sobre su eje Y
     }
-
-    // Actualizar el raycaster con la posición del ratón
-    raycaster.update(camera.position, mouse);
 
     renderer.render(scene, camera);
 }
@@ -192,16 +152,6 @@ window.addEventListener('resize', () => {
     camera.aspect = canvas.width / canvas.height;
     camera.updateProjectionMatrix();
 });
-
-// Añadir los eventos de ratón
-window.addEventListener('mousemove', onMouseMove, false);
-window.addEventListener('click', onMouseClick, false);
-
-// Hacer que el planeta gire más rápido o más lento al hacer clic
-function onMouseDoubleClick(event) {
-    rotationSpeed = (rotationSpeed === 0.01) ? 0.05 : 0.01; // Cambia la velocidad de rotación
-}
-window.addEventListener('dblclick', onMouseDoubleClick, false);
 
         </script>
         
