@@ -348,12 +348,12 @@ canvas.addEventListener('mousemove', (event) => {
                   }
                 },
                 opacity: {
-                  value: 0.5,
+                  value: 0.8,
                   random: true,
                   anim: {
                     enable: true,
                     speed: 1,
-                    opacity_min: 0.1,
+                    opacity_min: 0.3,
                     sync: false
                   }
                 },
@@ -367,17 +367,20 @@ canvas.addEventListener('mousemove', (event) => {
                     sync: false
                   }
                 },
-                move: {
-                    enable: true,
-                    speed: 0.3, // Movimiento lento
-                     direction: "none", // Movimiento aleatorio
-                    random: true,
-                    straight: false,
-                    out_mode: "out",
-                    bounce: false
-                  }
-                },
-                retina_detect: true
+                interactivity: {
+                    detect_on: "canvas", // Detección de interacciones con el lienzo
+                    events: {
+                     onhover: {
+                         enable: false, // Desactiva la interacción en hover
+                         mode: "repulse"
+                      },
+                     onclick: {
+                      enable: false, // Desactiva la interacción en clic
+                      mode: "push"
+                    }
+                 }
+            },
+            retina_detect: true
             });
           </script>
     </body>
