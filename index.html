@@ -46,7 +46,7 @@
             // Crear la escena, cámara y renderizador
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer();
+            const renderer = new THREE.WebGLRenderer({ alpha: true }); // Fondo transparente
             renderer.setSize(window.innerWidth, 500); // Definir el tamaño del canvas
             document.getElementById('planet-container').appendChild(renderer.domElement);
 
@@ -60,7 +60,7 @@
 
             loader.load('modelo/planet.gltf', (gltf) => {
                 planet = gltf.scene;
-                planet.scale.set(0.5, 0.5, 0.5);  // Ajusta el tamaño del planeta
+                planet.scale.set(2, 2, 2);  // Ajusta el tamaño del planeta
                 scene.add(planet);
             }, undefined, (error) => {
                 console.error('Error al cargar el modelo GLTF:', error);
