@@ -36,20 +36,24 @@
                 </div>
                 <a href="C:\Users\shrey\Downloads\B.-Software-Engineer.docx" class="btn">Download CV</a>
             </div>
-            <div class="home-img">
-                
-                <div id="planet-container" style="width: 100%; height: 500px; margin: 0 auto; display: block;"></div>
+
+            <!-- Contenedor del planeta con estilo flex y canvas -->
+            <div class="home-img flex-[0.5] xl:h-auto md:h-[600px] h-[400px] earth">
+                <div style="position: relative; width: 100%; height: 100%; overflow: hidden; pointer-events: auto; touch-action: none;">
+                    <div style="width: 100%; height: 100%;">
+                        <canvas id="planetCanvas" width="459" height="732" style="display: block; width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
             </div>
         </section>
-
+            
         <script>
-            // Crear la escena, cámara y renderizador
+            const canvas = document.getElementById('planetCanvas');
             const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ alpha: true }); // Fondo transparente
-            renderer.setSize(window.innerWidth, 500); // Definir el tamaño del canvas
-            document.getElementById('planet-container').appendChild(renderer.domElement);
-
+            const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true }); // Fondo transparente
+            renderer.setSize(canvas.width, canvas.height);
+            
             // Agregar luz a la escena
             const light = new THREE.AmbientLight(0xffffff, 1);
             scene.add(light);
@@ -60,8 +64,8 @@
 
             loader.load('path_to_your_model/planet.gltf', (gltf) => {
                 planet = gltf.scene;
-                planet.scale.set(1.5, 1.5, 1.5);  // Reducir el tamaño del planeta
-                planet.position.set(0, 0, 0);  // Centrado en la escena
+                planet.scale.set(1.5, 1.5, 1.5); // Reducir el tamaño del planeta
+                planet.position.set(0, 0, 0); // Centrado en la escena
 
                 // Cambiar el material del planeta para colores más vivos
                 planet.traverse((child) => {
@@ -85,22 +89,22 @@
                 requestAnimationFrame(animate);
 
                 if (planet) {
-                    planet.rotation.y += 0.01;  // Rotar el planeta sobre su eje Y
+                    planet.rotation.y += 0.01; // Rotar el planeta sobre su eje Y
                 }
 
                 renderer.render(scene, camera);
             }
 
             // Ajustar la cámara
-            camera.position.z = 3;  // Acercar la cámara para ver el planeta más grande
+            camera.position.z = 3; // Acercar la cámara para ver el planeta más grande
 
             animate();
 
             // Ajuste automático de la cámara al tamaño de la ventana
             window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
+                renderer.setSize(canvas.width, canvas.height);
+                camera.aspect = canvas.width / canvas.height;
                 camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, 500);
             });
         </script>
         
