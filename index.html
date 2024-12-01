@@ -55,8 +55,22 @@
             renderer.setSize(canvas.width, canvas.height);
             
             // Agregar luz a la escena
-            const light = new THREE.AmbientLight(0xffffff, 1);
-            scene.add(light);
+            const ambientLight1 = new THREE.AmbientLight(0xffffff, 1);
+            scene.add(ambientLight1);
+
+            // Agregar luces más dinámicas
+            const ambientLight2 = new THREE.AmbientLight(0x404040, 2); // Luz ambiental suave
+            scene.add(ambientLight2);
+
+            // Agregar una luz direccional para dar un brillo más dinámico al planeta
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(1, 1, 1).normalize(); // Posición de la luz direccional
+            scene.add(directionalLight);
+
+            // Cargar texturas
+            const textureLoader = new THREE.TextureLoader();
+            const planetTexture = textureLoader.load('modelo/textures/Planet_baseColor.png'); // Textura del planeta
+            const cloudsTexture = textureLoader.load('modelo/textures/Clouds_baseColor.png'); // Textura de las nubes
 
             // Cargar el modelo 3D del planeta (GLTF)
             const loader = new THREE.GLTFLoader();
@@ -67,17 +81,24 @@
                 planet.scale.set(1.5, 1.5, 1.5); // Reducir el tamaño del planeta
                 planet.position.set(0, 0, 0); // Centrado en la escena
 
-                // Cambiar el material del planeta para colores más vivos
+                
+                // Aplicar la textura del planeta
                 planet.traverse((child) => {
                     if (child.isMesh) {
-                        child.material = new THREE.MeshStandardMaterial({
-                            color: 0xaaaaaa, // Un color más brillante
-                            emissive: 0x555555, // Brillo para hacerlo más vivo
-                            roughness: 0.3,
-                            metalness: 0.5,
-                        });
-                    }
-                });
+                        // Asigna la textura principal al cuerpo del planeta
+                        if (child.name.includes("Planet")) { // Ajusta el nombre según lo que tenga tu modelo
+                            child.material.map = planetTexture; // Aplicar la textura del planeta
+                }
+                // Asigna la textura de las nubes
+                if (child.name.includes("Clouds")) { // Ajusta el nombre según lo que tenga tu modelo
+                    child.material.map = cloudsTexture; // Aplicar la textura de las nubes
+                    child.material.opacity = 0.5; // Hacer las nubes semi-translúcidas
+                    child.material.transparent = true;
+                }
+                child.material.needsUpdate = true; // Asegurarse de que el material se actualice
+                        
+            }
+        });
 
                 scene.add(planet);
             }, undefined, (error) => {
