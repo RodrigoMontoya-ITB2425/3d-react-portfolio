@@ -14,7 +14,7 @@
     <body>
 
         <div id="particles-js"></div>
-        
+
         <!--body-->
         <header class="header">
             <a href="#" class="logo">Portfolio</a>
@@ -331,7 +331,7 @@ canvas.addEventListener('mousemove', (event) => {
             particlesJS('particles-js', {
               particles: {
                 number: {
-                  value: 150, // Número de partículas
+                  value: 200, // Número de partículas
                   density: {
                     enable: true,
                     value_area: 800
@@ -358,44 +358,26 @@ canvas.addEventListener('mousemove', (event) => {
                   }
                 },
                 size: {
-                  value: 3,
+                  value: 2,
                   random: true,
                   anim: {
                     enable: true,
-                    speed: 3,
-                    size_min: 0.1,
+                    speed: 1,
+                    size_min: 0.5,
                     sync: false
                   }
                 },
                 move: {
-                  enable: true,
-                  speed: 0.5, // Velocidad de las partículas
-                  direction: "none", // Dirección aleatoria
-                  random: true,
-                  straight: false,
-                  out_mode: "out",
-                  bounce: false,
-                  attract: {
-                    enable: false,
-                    rotateX: 600,
-                    rotateY: 1200
-                  }
-                }
-              },
-              interactivity: {
-                detect_on: "canvas",
-                events: {
-                  onhover: {
                     enable: true,
-                    mode: "repulse"
-                  },
-                  onclick: {
-                    enable: true,
-                    mode: "push"
+                    speed: 0.3, // Movimiento lento
+                     direction: "none", // Movimiento aleatorio
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
                   }
-                }
-              },
-              retina_detect: true
+                },
+                retina_detect: true
             });
           </script>
     </body>
