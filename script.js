@@ -90,17 +90,6 @@ loader.load('pc/pc.gltf', function(gltf) {
     console.error('Error al cargar el modelo GLTF:', error);
 });
 
-// Posicionar la cámara
-camera.position.z = 5;
-
-// Función de animación (si no hay animaciones en el modelo)
-function animate() {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-}
-
-animate();
-
 document.addEventListener("DOMContentLoaded", function() {
     particlesJS("particles-js", {
         "particles": {
