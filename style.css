@@ -12,10 +12,11 @@
 }
 
 :root {
-    --bg-color: #0a0e1f; /* Color más oscuro con tono azul */
-    --second-bg-color: #1d2532; /* Segundo fondo más oscuro */
-    --text-color: #fff; /* Blanco para el texto */
-    --main-color: #4f8cff; /* Color azul claro */
+   --bg-color: #020c1b; /* Azul muy oscuro */
+   --second-bg-color: #041727; /* Azul más claro para secciones */
+   --text-color: #e0f7ff; /* Azul grisáceo claro */
+   --main-color: #1e6f9f; /* Azul acentuado */
+   --secondary-color: #13233c; /* Azul profundo para detalles */
 }
 
 html {
@@ -49,7 +50,7 @@ section {
 }
 
 .header.sticky {
-    border-bottom: .1rem solid rgba(0, 0, 0, .2);
+    border-bottom: .1rem solid var(--secondary-color);
 }
 
 .logo {
