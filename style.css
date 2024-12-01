@@ -12,11 +12,11 @@
 }
 
 :root {
-   --bg-color: #020c1b; /* Azul muy oscuro */
-   --second-bg-color: #041727; /* Azul más claro para secciones */
-   --text-color: #e0f7ff; /* Azul grisáceo claro */
-   --main-color: #1e6f9f; /* Azul acentuado */
-   --secondary-color: #13233c; /* Azul profundo para detalles */
+   --bg-color: #050816; /* Fondo negro */
+   --second-bg-color: #0d1b2a; /* Azul muy oscuro */
+   --text-color: #ffffff; /* Texto blanco */
+   --main-color: #1e6091; /* Azul acentuado */
+   --secondary-color: #1c3c54; /* Azul intermedio */
 }
 
 html {
