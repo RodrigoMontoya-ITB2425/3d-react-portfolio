@@ -240,8 +240,7 @@ span {
 
 .portfolio-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    align-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Dynamic grid with responsive columns */
     gap: 2.5rem;
 }
 
@@ -255,6 +254,8 @@ span {
 
 .portfolio-box img {
     width: 100%;
+    height: auto; /* Ensure images fill the container */
+    object-fit: cover; /* Maintain aspect ratio while covering container */
     transition: .5s ease;
 }
 
