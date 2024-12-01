@@ -52,6 +52,55 @@ const typed = new Typed('.multiple-text',{
     loop:true
 });
 
+// Crear la escena, cámara y renderizador
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.getElementById('gltf-animation').appendChild(renderer.domElement);
+
+// Configuración del cargador GLTF
+const loader = new THREE.GLTFLoader();
+
+// Ruta a tu archivo GLTF (asegúrate de que la ruta es correcta)
+loader.load('pc/pc.gltf', function(gltf) {
+    // Añadir el modelo a la escena
+    scene.add(gltf.scene);
+
+    // Si el modelo tiene animaciones, activarlas (si es necesario)
+    if (gltf.animations && gltf.animations.length) {
+        const mixer = new THREE.AnimationMixer(gltf.scene);
+        gltf.animations.forEach((clip) => {
+            mixer.clipAction(clip).play();
+        });
+
+        // Animar
+        function animate() {
+            requestAnimationFrame(animate);
+            mixer.update(0.01); // Actualizar animaciones
+            renderer.render(scene, camera);
+        }
+        animate();
+    } else {
+        // Si no hay animaciones, simplemente renderizar
+        renderer.render(scene, camera);
+    }
+
+}, undefined, function(error) {
+    console.error('Error al cargar el modelo GLTF:', error);
+});
+
+// Posicionar la cámara
+camera.position.z = 5;
+
+// Función de animación (si no hay animaciones en el modelo)
+function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+}
+
+animate();
+
 document.addEventListener("DOMContentLoaded", function() {
     particlesJS("particles-js", {
         "particles": {
