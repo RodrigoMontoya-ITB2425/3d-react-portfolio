@@ -62,7 +62,7 @@
             const ambientLight2 = new THREE.AmbientLight(0x404040, 2); // Luz ambiental suave
             scene.add(ambientLight2);
 
-            const ambientLightGlobal = new THREE.AmbientLight(0xffffff, 0.5);  // Intensity de 0.5 para un brillo suave
+            const ambientLightGlobal = new THREE.AmbientLight(0xffffff, 0.5);  // Intensidad de 0.5 para un brillo suave
             scene.add(ambientLightGlobal);
 
             // Agregar una luz direccional para dar un brillo más dinámico al planeta
@@ -74,75 +74,85 @@
             const textureLoader = new THREE.TextureLoader();
             const planetTexture = textureLoader.load('modelo/textures/Planet_baseColor.png'); // Textura del planeta
             const cloudsTexture = textureLoader.load('modelo/textures/Clouds_baseColor.png'); // Textura de las nubes
+
+            // Material para el planeta
             const planetMaterial = new THREE.MeshStandardMaterial({
-            map: planetTexture,
-            roughness: 0.4, // Menos rugoso
-            metalness: 0.1, // Un poco metálico
-            emissive: new THREE.Color(0x00ffff) // Emisión de color si lo deseas
-        });
-
-        const exposure = 1.5;  // Ajusta esto para obtener un brillo mayor
-        renderer.toneMappingExposure = exposure;
-
-        const planetGeometry = new THREE.SphereGeometry(5, 32, 32);
-        const planetMesh = new THREE.Mesh(planetGeometry, planetMaterial);
-        scene.add(planetMesh);
-
-            // Cargar el modelo 3D del planeta (GLTF)
-            const loader = new THREE.GLTFLoader();
-            let planet;
-
-            loader.load('modelo/planet.gltf', (gltf) => {
-                planet = gltf.scene;
-                planet.scale.set(1.5, 1.5, 1.5); // Reducir el tamaño del planeta
-                planet.position.set(0, 0, 0); // Centrado en la escena
-
-                
-                // Aplicar la textura del planeta
-                planet.traverse((child) => {
-                    if (child.isMesh) {
-                        // Asigna la textura principal al cuerpo del planeta
-                        if (child.name.includes("Planet")) { // Ajusta el nombre según lo que tenga tu modelo
-                            child.material.map = planetTexture; // Aplicar la textura del planeta
-                }
-                // Asigna la textura de las nubes
-                if (child.name.includes("Clouds")) { // Ajusta el nombre según lo que tenga tu modelo
-                    child.material.map = cloudsTexture; // Aplicar la textura de las nubes
-                    child.material.opacity = 0.5; // Hacer las nubes semi-translúcidas
-                    child.material.transparent = true;
-                }
-                child.material.needsUpdate = true; // Asegurarse de que el material se actualice
-                        
-            }
-        });
-
-                scene.add(planet);
-            }, undefined, (error) => {
-                console.error('Error al cargar el modelo GLTF:', error);
+                map: planetTexture,
+                roughness: 0.4, // Menos rugoso
+                metalness: 0.1, // Un poco metálico
+                emissive: new THREE.Color(0x00ffff), // Emisión de color si lo deseas
             });
 
-            // Animar la rotación del planeta
-            function animate() {
-                requestAnimationFrame(animate);
+            // Material para las nubes (más blancas y brillantes)
+            const cloudMaterial = new THREE.MeshStandardMaterial({
+                map: cloudsTexture,
+                roughness: 0.1, // Superficie suave para reflejar más la luz
+                emissive: new THREE.Color(0xffffff), // Emisión blanca
+                emissiveIntensity: 0.5, // Intensidad de la emisión
+                transparent: true,
+                opacity: 0.6, // Hacer las nubes más suaves y translúcidas
+});
 
-                if (planet) {
-                    planet.rotation.y += 0.01; // Rotar el planeta sobre su eje Y
-                }
+// Ajustar la exposición para un mayor brillo
+const exposure = 1.5; // Ajusta esto para obtener un brillo mayor
+renderer.toneMappingExposure = exposure;
 
-                renderer.render(scene, camera);
+const planetGeometry = new THREE.SphereGeometry(5, 32, 32);
+const planetMesh = new THREE.Mesh(planetGeometry, planetMaterial);
+scene.add(planetMesh);
+
+// Cargar el modelo 3D del planeta (GLTF)
+const loader = new THREE.GLTFLoader();
+let planet;
+
+loader.load('modelo/planet.gltf', (gltf) => {
+    planet = gltf.scene;
+    planet.scale.set(1.5, 1.5, 1.5); // Reducir el tamaño del planeta
+    planet.position.set(0, 0, 0); // Centrado en la escena
+
+    // Aplicar la textura del planeta
+    planet.traverse((child) => {
+        if (child.isMesh) {
+            // Asigna la textura principal al cuerpo del planeta
+            if (child.name.includes("Planet")) { // Ajusta el nombre según lo que tenga tu modelo
+                child.material.map = planetTexture; // Aplicar la textura del planeta
             }
+            // Asigna la textura de las nubes
+            if (child.name.includes("Clouds")) { // Ajusta el nombre según lo que tenga tu modelo
+                child.material = cloudMaterial; // Aplicar la textura de las nubes
+            }
+            child.material.needsUpdate = true; // Asegurarse de que el material se actualice
+        }
+    });
 
-            // Ajustar la cámara
-            camera.position.z = 3; // Acercar la cámara para ver el planeta más grande
+    scene.add(planet);
+}, undefined, (error) => {
+    console.error('Error al cargar el modelo GLTF:', error);
+});
 
-            animate();
+// Animar la rotación del planeta
+function animate() {
+    requestAnimationFrame(animate);
 
-            // Ajuste automático de la cámara al tamaño de la ventana
-            window.addEventListener('resize', () => {
-                renderer.setSize(canvas.width, canvas.height);
-                camera.aspect = canvas.width / canvas.height;
-                camera.updateProjectionMatrix();
-            });
+    if (planet) {
+        planet.rotation.y += 0.01; // Rotar el planeta sobre su eje Y
+    }
+
+    renderer.render(scene, camera);
+}
+
+// Ajustar la cámara
+camera.position.z = 3; // Acercar la cámara para ver el planeta más grande
+
+animate();
+
+// Ajuste automático de la cámara al tamaño de la ventana
+window.addEventListener('resize', () => {
+    renderer.setSize(canvas.width, canvas.height);
+    camera.aspect = canvas.width / canvas.height;
+    camera.updateProjectionMatrix();
+});
+
         </script>
         
         <section class="about" id="about">
