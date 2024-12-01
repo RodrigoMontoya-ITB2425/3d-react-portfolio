@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
             model.scale.set(0.5, 0.5, 0.5); // Ajusta estos valores si es necesario
 
             // Centrar el modelo (ajustar la posición si es necesario)
-            model.position.set(2, 8, 0);
+            model.position.set(2, 1.5, 0);
 
             console.log('Modelo GLTF cargado correctamente');
         },
@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
     // Posicionar la cámara
-    camera.position.set(1, 8, 5);
+    camera.position.set(2, 1.5, 5);
 
     // Crear controles de órbita para permitir la rotación con el ratón
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
