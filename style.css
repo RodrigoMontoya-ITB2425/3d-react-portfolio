@@ -13,8 +13,8 @@
  }
 
  :root {
-    --background-color: rgb(5, 8, 22);
-    --second-bg-color: rgb(15, 18, 32);
+    --bg-color:#1f242d;
+    --second-bg-color:#323946;
     --text-color:#fff;
     --main-color:#0ef; 
  }
@@ -26,27 +26,8 @@
  }
 
  body{
-   margin: 0;
-   overflow: hidden;
-   background-color: #0a0a0a; /* Fondo oscuro */
- }
- 
- .stars {
-   position: absolute;
-   width: 100%;
-   height: 100%;
-   background: radial-gradient(circle, #fff 1px, transparent 1px);
-   background-size: 50px 50px;
-   animation: starsAnimation 100s infinite linear;
- }
- 
- @keyframes starsAnimation {
-   0% {
-     transform: translate(0, 0);
-   }
-   100% {
-     transform: translate(-100%, -100%);
-   }
+    background: var(--bg-color);
+    color: var(--text-color);
  }
 
  section{
@@ -508,18 +489,3 @@
    display: block;
 }
 
-/* Estilo para el contenedor de partículas */
-#particles-js {
-   position: absolute;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   z-index: -1; /* Asegura que las partículas estén detrás del contenido */
-}
-
-/* Asegúrate de que el body y html ocupen toda la pantalla */
-html, body {
-   height: 100%;
-   margin: 0;
-}
