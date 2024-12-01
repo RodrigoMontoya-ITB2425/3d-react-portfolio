@@ -130,6 +130,17 @@ loader.load('modelo/planet.gltf', (gltf) => {
     console.error('Error al cargar el modelo GLTF:', error);
 });
 
+// Función para manejar la animación
+function animate() {
+    requestAnimationFrame(animate);
+
+    if (planet) {
+        planet.rotation.y += rotationSpeed; // Rotación basada en la velocidad
+    }
+
+    renderer.render(scene, camera);
+}
+
 // Animar la rotación del planeta
 function animate() {
     requestAnimationFrame(animate);
@@ -152,7 +163,33 @@ window.addEventListener('resize', () => {
     camera.aspect = canvas.width / canvas.height;
     camera.updateProjectionMatrix();
 });
+// Detectar interacción del usuario (click o movimiento del cursor)
+let isMouseDown = false;
 
+canvas.addEventListener('mousedown', (event) => {
+    isMouseDown = true;
+    clickTime = Date.now(); // Marca el tiempo cuando se hace clic
+    rotationSpeed = 0.05; // Aumentar velocidad de rotación al hacer clic
+});
+
+canvas.addEventListener('mouseup', () => {
+    isMouseDown = false;
+    const clickDuration = Date.now() - clickTime;
+
+    // Si el clic fue sostenido durante más de 1 segundo, detener la rotación
+    if (clickDuration > 1000) {
+        rotationSpeed = 0; // Detener la rotación
+    } else {
+        rotationSpeed = 0.01; // Restablecer la velocidad normal después de un clic corto
+    }
+});
+
+canvas.addEventListener('mousemove', (event) => {
+    // Detectar si el cursor está sobre el canvas y cambiar la velocidad de rotación
+    if (isMouseDown) {
+        rotationSpeed = 0.1; // Hacerlo aún más rápido si el usuario está presionando y moviendo el mouse
+    }
+});
         </script>
         
         <section class="about" id="about">
