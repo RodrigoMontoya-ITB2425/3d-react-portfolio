@@ -1,14 +1,17 @@
-let menuIcon=document.querySelector('#menu-icon');
-let navbar=document.querySelector('.navbar');
+// Menú de navegación
+let menuIcon = document.querySelector('#menu-icon');
+let navbar = document.querySelector('.navbar');
 
-menuIcon.onclick=()=>{
-    menuIcon.classList.toggle('bx-x');
-    navbar.classList.toggle('active');
-};
+if (menuIcon && navbar) {
+    menuIcon.onclick = () => {
+        menuIcon.classList.toggle('bx-x');
+        navbar.classList.toggle('active');
+    };
+}
 
-
-let sections=document.querySelectorAll('section');
-let navLinks=document.querySelectorAll('header nav a');
+// Secciones y enlaces de navegación
+let sections = document.querySelectorAll('section');
+let navLinks = document.querySelectorAll('header nav a');
 
 window.onscroll = () => {
     sections.forEach(sec => {
@@ -17,42 +20,49 @@ window.onscroll = () => {
         let height = sec.offsetHeight;
         let id = sec.getAttribute('id');
 
-        if(top >= offset && top < offset + height){
+        if (top >= offset && top < offset + height) {
             navLinks.forEach(links => {
                 links.classList.remove('active');
-                document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
+                document.querySelector(`header nav a[href*=${id}]`).classList.add('active');
             });
-        };
-
+        }
     });
-    let header=document.querySelector('header');
 
-    header.classList.toggle('sticky',window.screenY>100);
-    menuIcon.classList.remove('bx-x');
-    navbar.classList.remove('active');
+    let header = document.querySelector('header');
+    if (header) {
+        header.classList.toggle('sticky', window.scrollY > 100);
+    }
+
+    // Cerrar el menú móvil si se está desplazando
+    if (menuIcon && navbar) {
+        menuIcon.classList.remove('bx-x');
+        navbar.classList.remove('active');
+    }
 };
 
+// Configuración de ScrollReveal
 ScrollReveal({
-    //reset:true,
-    distance:'80px',
-    duration:2000,
-    delay:200
+    distance: '80px',
+    duration: 2000,
+    delay: 200
 });
 
-ScrollReveal().reveal('.home-content,.heading',{origin:'top'});
-ScrollReveal().reveal('.home-img,.skills-container,.portfolio-box,.contact form',{origin:'bottom'});
-ScrollReveal().reveal('.home-content h1,.about-img',{origin:'left'});
-ScrollReveal().reveal('.home-content p,.about-content',{origin:'right'});
+ScrollReveal().reveal('.home-content,.heading', { origin: 'top' });
+ScrollReveal().reveal('.home-img,.skills-container,.portfolio-box,.contact form', { origin: 'bottom' });
+ScrollReveal().reveal('.home-content h1,.about-img', { origin: 'left' });
+ScrollReveal().reveal('.home-content p,.about-content', { origin: 'right' });
 
-const typed = new Typed('.multiple-text',{
-    strings:['ITB STUDENT ','ASIX LEARNER'],
-    typeSpeed:100,
-    backSpeed:100,
-    backDelay:1000,
-    loop:true
+// Configuración de Typed.js
+const typed = new Typed('.multiple-text', {
+    strings: ['ITB STUDENT ', 'ASIX LEARNER'],
+    typeSpeed: 100,
+    backSpeed: 100,
+    backDelay: 1000,
+    loop: true
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+// Configuración de Particles.js
+document.addEventListener("DOMContentLoaded", function () {
     particlesJS("particles-js", {
         "particles": {
             "number": {
@@ -81,40 +91,21 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             },
             "opacity": {
-                "value": 0.5852454022159158,
-                "random": false,
-                "anim": {
-                    "enable": false,
-                    "speed": 1,
-                    "opacity_min": 0.1,
-                    "sync": false
-                }
+                "value": 0.6,
+                "random": false
             },
             "size": {
-                "value": 4.008530152163807,
-                "random": true,
-                "anim": {
-                    "enable": false,
-                    "speed": 31.67101127975246,
-                    "size_min": 4.060386061506725,
-                    "sync": false
-                }
+                "value": 4,
+                "random": true
             },
             "line_linked": {
-                "enable": false,
-                "distance": 150,
-                "color": "#ffffff",
-                "opacity": 0.4,
-                "width": 1
+                "enable": false
             },
             "move": {
                 "enable": true,
-                "speed": 3.206824121731046,
-                "direction": "none",
+                "speed": 3,
                 "random": true,
-                "straight": false,
                 "out_mode": "bounce",
-                "bounce": false,
                 "attract": {
                     "enable": true,
                     "rotateX": 600,
@@ -137,27 +128,18 @@ document.addEventListener("DOMContentLoaded", function() {
             },
             "modes": {
                 "grab": {
-                    "distance": 400,
-                    "line_linked": {
-                        "opacity": 1
-                    }
+                    "distance": 400
                 },
                 "bubble": {
                     "distance": 400,
                     "size": 40,
-                    "duration": 2,
-                    "opacity": 8,
-                    "speed": 3
+                    "duration": 2
                 },
                 "repulse": {
-                    "distance": 200,
-                    "duration": 0.4
+                    "distance": 200
                 },
                 "push": {
                     "particles_nb": 4
-                },
-                "remove": {
-                    "particles_nb": 2
                 }
             }
         },
