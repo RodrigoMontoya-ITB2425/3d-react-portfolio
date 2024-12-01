@@ -40,7 +40,7 @@
                     <a href="https://www.instagram.com/rodrygoooo_/?igshid=YmMyMTA2M2Y%3D"><i class='bx bxl-instagram' ></i></a>
                     <a href="https://www.linkedin.com"><i class='bx bxl-linkedin-square' ></i></a>
                 </div>
-                <a href="C:\Users\shrey\Downloads\B.-Software-Engineer.docx" class="btn">Download CV</a>
+                <a href="C:\Users\Rodrygo\Downloads\CV-Rodrigo.docx" class="btn">Download CV</a>
             </div>
 
             <!-- Contenedor del planeta con estilo flex y canvas -->
@@ -59,144 +59,156 @@
             const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true }); // Fondo transparente
             renderer.setSize(canvas.width, canvas.height);
-            
+        
             // Agregar luz a la escena
             const ambientLight1 = new THREE.AmbientLight(0xffffff, 1);
             scene.add(ambientLight1);
-
-            // Agregar luces más dinámicas
+        
             const ambientLight2 = new THREE.AmbientLight(0x404040, 2); // Luz ambiental suave
             scene.add(ambientLight2);
-
+        
             const ambientLightGlobal = new THREE.AmbientLight(0xffffff, 0.5);  // Intensidad de 0.5 para un brillo suave
             scene.add(ambientLightGlobal);
-
-            // Agregar una luz direccional para dar un brillo más dinámico al planeta
+        
             const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-            directionalLight.position.set(5, 5, 5).normalize(); // Posición de la luz direccional
+            directionalLight.position.set(5, 5, 5).normalize();
             scene.add(directionalLight);
-
+        
             // Cargar texturas
             const textureLoader = new THREE.TextureLoader();
-            const planetTexture = textureLoader.load('modelo/textures/Planet_baseColor.png'); // Textura del planeta
-            const cloudsTexture = textureLoader.load('modelo/textures/Clouds_baseColor.png'); // Textura de las nubes
-
-            // Material para el planeta
+            const planetTexture = textureLoader.load('modelo/textures/Planet_baseColor.png');
+            const cloudsTexture = textureLoader.load('modelo/textures/Clouds_baseColor.png');
+        
+            // Materiales
             const planetMaterial = new THREE.MeshStandardMaterial({
                 map: planetTexture,
-                roughness: 0.4, // Menos rugoso
-                metalness: 0.1, // Un poco metálico
-                emissive: new THREE.Color(0x00ffff), // Emisión de color si lo deseas
+                roughness: 0.4,
+                metalness: 0.1,
+                emissive: new THREE.Color(0x00ffff),
             });
-
-            // Material para las nubes (más blancas y brillantes)
+        
             const cloudMaterial = new THREE.MeshStandardMaterial({
                 map: cloudsTexture,
-                roughness: 0.1, // Superficie suave para reflejar más la luz
-                emissive: new THREE.Color(0xffffff), // Emisión blanca
-                emissiveIntensity: 0.5, // Intensidad de la emisión
+                roughness: 0.1,
+                emissive: new THREE.Color(0xffffff),
+                emissiveIntensity: 0.5,
                 transparent: true,
-                opacity: 0.6, // Hacer las nubes más suaves y translúcidas
-});
-
-// Ajustar la exposición para un mayor brillo
-const exposure = 1.5; // Ajusta esto para obtener un brillo mayor
-renderer.toneMappingExposure = exposure;
-
-const planetGeometry = new THREE.SphereGeometry(5, 32, 32);
-const planetMesh = new THREE.Mesh(planetGeometry, planetMaterial);
-scene.add(planetMesh);
-
-// Cargar el modelo 3D del planeta (GLTF)
-const loader = new THREE.GLTFLoader();
-let planet;
-
-loader.load('modelo/planet.gltf', (gltf) => {
-    planet = gltf.scene;
-    planet.scale.set(1.5, 1.5, 1.5); // Reducir el tamaño del planeta
-    planet.position.set(0, 0, 0); // Centrado en la escena
-
-    // Aplicar la textura del planeta
-    planet.traverse((child) => {
-        if (child.isMesh) {
-            // Asigna la textura principal al cuerpo del planeta
-            if (child.name.includes("Planet")) { // Ajusta el nombre según lo que tenga tu modelo
-                child.material.map = planetTexture; // Aplicar la textura del planeta
+                opacity: 0.6,
+            });
+        
+            const exposure = 1.5;
+            renderer.toneMappingExposure = exposure;
+        
+            const planetGeometry = new THREE.SphereGeometry(5, 32, 32);
+            const planetMesh = new THREE.Mesh(planetGeometry, planetMaterial);
+            scene.add(planetMesh);
+        
+            // Cargar el modelo 3D del planeta
+            const loader = new THREE.GLTFLoader();
+            let planet;
+        
+            loader.load('modelo/planet.gltf', (gltf) => {
+                planet = gltf.scene;
+                planet.scale.set(1.5, 1.5, 1.5);
+                planet.position.set(0, 0, 0);
+                planet.traverse((child) => {
+                    if (child.isMesh) {
+                        if (child.name.includes("Planet")) {
+                            child.material.map = planetTexture;
+                        }
+                        if (child.name.includes("Clouds")) {
+                            child.material = cloudMaterial;
+                        }
+                        child.material.needsUpdate = true;
+                    }
+                });
+                scene.add(planet);
+            }, undefined, (error) => {
+                console.error('Error al cargar el modelo GLTF:', error);
+            });
+        
+            // Inicializar la velocidad de rotación
+            let rotationSpeed = 0.01;
+        
+            // Función de animación
+            function animate() {
+                requestAnimationFrame(animate);
+        
+                if (planet) {
+                    planet.rotation.y += rotationSpeed; // Rotación basada en la velocidad
+                }
+        
+                renderer.render(scene, camera);
             }
-            // Asigna la textura de las nubes
-            if (child.name.includes("Clouds")) { // Ajusta el nombre según lo que tenga tu modelo
-                child.material = cloudMaterial; // Aplicar la textura de las nubes
-            }
-            child.material.needsUpdate = true; // Asegurarse de que el material se actualice
-        }
-    });
-
-    scene.add(planet);
-}, undefined, (error) => {
-    console.error('Error al cargar el modelo GLTF:', error);
-});
-
-// Función para manejar la animación
-function animate() {
-    requestAnimationFrame(animate);
-
-    if (planet) {
-        planet.rotation.y += rotationSpeed; // Rotación basada en la velocidad
-    }
-
-    renderer.render(scene, camera);
-}
-
-// Animar la rotación del planeta
-function animate() {
-    requestAnimationFrame(animate);
-
-    if (planet) {
-        planet.rotation.y += 0.01; // Rotar el planeta sobre su eje Y
-    }
-
-    renderer.render(scene, camera);
-}
-
-// Ajustar la cámara
-camera.position.z = 3; // Acercar la cámara para ver el planeta más grande
-
-animate();
-
-// Ajuste automático de la cámara al tamaño de la ventana
-window.addEventListener('resize', () => {
-    renderer.setSize(canvas.width, canvas.height);
-    camera.aspect = canvas.width / canvas.height;
-    camera.updateProjectionMatrix();
-});
-// Detectar interacción del usuario (click o movimiento del cursor)
-let isMouseDown = false;
-
-canvas.addEventListener('mousedown', (event) => {
-    isMouseDown = true;
-    clickTime = Date.now(); // Marca el tiempo cuando se hace clic
-    rotationSpeed = 0.05; // Aumentar velocidad de rotación al hacer clic
-});
-
-canvas.addEventListener('mouseup', () => {
-    isMouseDown = false;
-    const clickDuration = Date.now() - clickTime;
-
-    // Si el clic fue sostenido durante más de 1 segundo, detener la rotación
-    if (clickDuration > 1000) {
-        rotationSpeed = 0; // Detener la rotación
-    } else {
-        rotationSpeed = 0.01; // Restablecer la velocidad normal después de un clic corto
-    }
-});
-
-canvas.addEventListener('mousemove', (event) => {
-    // Detectar si el cursor está sobre el canvas y cambiar la velocidad de rotación
-    if (isMouseDown) {
-        rotationSpeed = 0.1; // Hacerlo aún más rápido si el usuario está presionando y moviendo el mouse
-    }
-});
+        
+            // Ajustar la cámara
+            camera.position.z = 3;
+        
+            animate();
+        
+            // Ajuste automático de la cámara al tamaño de la ventana
+            window.addEventListener('resize', () => {
+                renderer.setSize(canvas.width, canvas.height);
+                camera.aspect = canvas.width / canvas.height;
+                camera.updateProjectionMatrix();
+            });
+        
+            // Variables para la interacción del ratón
+            let isLeftMouseDown = false;
+            let isRightMouseDown = false;
+            let prevMousePosition = { x: 0, y: 0 };
+        
+            // Detectar clic izquierdo para rotación rápida
+            canvas.addEventListener('mousedown', (event) => {
+                if (event.button === 0) { // Clic izquierdo
+                    isLeftMouseDown = true;
+                    rotationSpeed = 0.1; // Aumentar la velocidad de rotación
+                } else if (event.button === 2) { // Clic derecho
+                    isRightMouseDown = true;
+                }
+            });
+        
+            // Detectar que el clic izquierdo se ha soltado
+            canvas.addEventListener('mouseup', (event) => {
+                if (event.button === 0) { // Clic izquierdo
+                    isLeftMouseDown = false;
+                    rotationSpeed = 0.01; // Restablecer la velocidad de rotación
+                } else if (event.button === 2) { // Clic derecho
+                    isRightMouseDown = false;
+                }
+            });
+        
+            // Detectar el movimiento del mouse para mover el planeta con el clic derecho
+            canvas.addEventListener('mousemove', (event) => {
+                if (isLeftMouseDown) {
+                    rotationSpeed = 0.1; // Mantener rotación rápida mientras se mantiene clic izquierdo
+                }
+        
+                if (isRightMouseDown) {
+                    const deltaX = event.clientX - prevMousePosition.x;
+                    const deltaY = event.clientY - prevMousePosition.y;
+                    planet.position.x += deltaX * 0.01; // Mover planeta en X
+                    planet.position.y -= deltaY * 0.01; // Mover planeta en Y
+                }
+        
+                prevMousePosition = { x: event.clientX, y: event.clientY };
+            });
+        
+            // Detectar rueda del ratón para hacer zoom
+            canvas.addEventListener('wheel', (event) => {
+                if (event.deltaY < 0) {
+                    camera.position.z -= 0.1; // Alejar
+                } else {
+                    camera.position.z += 0.1; // Acercar
+                }
+            });
+        
+            // Prevenir el menú contextual al hacer clic derecho
+            canvas.addEventListener('contextmenu', (event) => {
+                event.preventDefault(); // Evitar el menú contextual por defecto
+            });
         </script>
+        
         
         <section class="about" id="about">
             <div class="about-img">
@@ -253,10 +265,10 @@ canvas.addEventListener('mousemove', (event) => {
         
                 <!-- Project 2 -->
                 <div class="portfolio-box">
-                    <img src="myproject/image/austin-poon-JO_S6ewBqAk-unsplash.jpg" alt="Dynamics Website Deployment in AWS">
+                    <img src="myproject\image\torre-gaming-3036108.jpg" alt="Dynamics Website Deployment in AWS">
                     <div class="portfolio-layer">
-                        <h4>Dynamics Website Deployment in AWS</h4>
-                        <p>In this project I deployed a dynamic website in AWS so that we can add and delete data by connecting to databases.</p>
+                        <h4>Improving My Steam Profile, Setup, and 3D Animation</h4>
+                        <p>I’ve improved my Steam profile with custom visuals and organized achievements, while upgrading my gaming setup for better performance. Additionally, I integrated an interactive 3D animation of my PC setup on my website for a more immersive experience.</p>
                         <a href="#"><i class='bx bx-link-external'></i></a>
                     </div>
                 </div>
@@ -286,7 +298,8 @@ canvas.addEventListener('mousemove', (event) => {
         <section id="pc-specs">
             
             <!-- GLTF Animation -->
-            <h1>PC Specs</h1>
+            <h2 class="heading">PC<span> Specs</span></h2>
+            <h1></h1>Use left click, right click and mouse wheel to interact.</h1>
             <div id="gltf-animation">
                 <canvas id="gltf-canvas"></canvas> <!-- Aquí se renderizará la animación -->
             </div>
@@ -304,9 +317,13 @@ canvas.addEventListener('mousemove', (event) => {
             </div>
         
             <!-- Enlace a perfil de Steam -->
-            <div>
+            <div class="steam-profile" style="text-align: center;">
+
                 <h2>Steam Profile</h2>
-                <a href="https://steamcommunity.com/profiles/76561198997107461/" target="_blank">Visit my Steam profile</a>
+                <div style="margin: 10px 0;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam Logo" style="width: 50px; height: 50px; display: block; margin: 0 auto;">
+                </div>
+                <a href="your_steam_profile_link_here" target="_blank">Visit my Steam profile</a>
             </div>
         </section>        
         </section>

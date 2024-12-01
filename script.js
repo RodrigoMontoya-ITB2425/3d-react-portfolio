@@ -216,3 +216,30 @@ document.addEventListener("DOMContentLoaded", function () {
     animate();
 });
 
+let isMouseOverPlanet = false;
+const minDistance = 2; // Distancia mínima a la que la cámara puede acercarse
+const maxDistance = 5; // Distancia máxima a la que la cámara puede alejarse
+const zoomSpeed = 0.1;  // Velocidad de acercamiento/alejamiento
+// Detectar si el ratón está sobre el canvas
+canvas.addEventListener('mouseenter', () => {
+    isMouseOverPlanet = true; // El ratón está sobre el canvas
+});
+
+canvas.addEventListener('mouseleave', () => {
+    isMouseOverPlanet = false; // El ratón salió del canvas
+});
+
+// Detectar rueda del ratón solo cuando el ratón está sobre el canvas
+canvas.addEventListener('wheel', (event) => {
+    if (!isMouseOverPlanet) return; // No hacer nada si el ratón no está sobre el canvas
+
+    event.preventDefault(); // Evitar el desplazamiento de la página
+
+    if (event.deltaY < 0) {
+        // Alejar (no dejar que la cámara se aleje más allá de maxDistance)
+        camera.position.z = Math.max(camera.position.z - 0.1, minDistance);
+    } else {
+        // Acercar (no dejar que la cámara se acerque más allá de minDistance)
+        camera.position.z = Math.min(camera.position.z + 0.1, maxDistance);
+    }
+});
