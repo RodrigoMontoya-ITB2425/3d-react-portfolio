@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
             model.scale.set(0.5, 0.5, 0.5); // Ajusta estos valores si es necesario
 
             // Centrar el modelo (ajustar la posición si es necesario)
-            model.position.set(0, 0, 0);
+            model.position.set(0, 1, 0);
 
             console.log('Modelo GLTF cargado correctamente');
         },
