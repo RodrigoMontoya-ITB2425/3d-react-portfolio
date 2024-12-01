@@ -7,6 +7,8 @@
         <title>RESPONSIVE PERSONAL PORTFOLIO WEBSITE </title>
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/loaders/GLTFLoader.js"></script>
     </head>
     <body>
         <!--body-->
@@ -35,9 +37,60 @@
                 <a href="C:\Users\shrey\Downloads\B.-Software-Engineer.docx" class="btn">Download CV</a>
             </div>
             <div class="home-img">
-                <img src="https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2022/10/computer_engineer-compare-page.jpg" alt="">
+                
+                <div id="planet-container" style="width: 100%; height: 500px;"></div>
             </div>
         </section>
+
+        <script>
+            // Crear la escena, cámara y renderizador
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, 500); // Definir el tamaño del canvas
+            document.getElementById('planet-container').appendChild(renderer.domElement);
+
+            // Agregar luz a la escena
+            const light = new THREE.AmbientLight(0xffffff, 1);
+            scene.add(light);
+
+            // Cargar el modelo 3D del planeta (GLTF)
+            const loader = new THREE.GLTFLoader();
+            let planet;
+
+            loader.load('path_to_your_model/planet.gltf', (gltf) => {
+                planet = gltf.scene;
+                planet.scale.set(0.5, 0.5, 0.5);  // Ajusta el tamaño del planeta
+                scene.add(planet);
+            }, undefined, (error) => {
+                console.error('Error al cargar el modelo GLTF:', error);
+            });
+
+            // Animar la rotación del planeta
+            function animate() {
+                requestAnimationFrame(animate);
+
+                if (planet) {
+                    planet.rotation.y += 0.01;  // Rotar el planeta sobre su eje Y
+                }
+
+                renderer.render(scene, camera);
+            }
+
+            // Ajustar la cámara
+            camera.position.z = 5;
+
+            animate();
+
+            // Ajuste automático de la cámara al tamaño de la ventana
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, 500);
+                });
+
+        </script>
+        
         <section class="about" id="about">
             <div class="about-img">
                 <img src="https://wallpaperaccess.com/full/1385382.jpg" alt="">
@@ -165,6 +218,10 @@
                 .catch(error => console.error('Error!', error.message))
             })
           </script>
+
+          <script src="https://unpkg.com/scrollreveal"></script>
+          <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+          <script src="script.js"></script>
         
     </body>
 </html>
