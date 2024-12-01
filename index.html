@@ -62,15 +62,31 @@
             const ambientLight2 = new THREE.AmbientLight(0x404040, 2); // Luz ambiental suave
             scene.add(ambientLight2);
 
+            const ambientLightGlobal = new THREE.AmbientLight(0xffffff, 0.5);  // Intensity de 0.5 para un brillo suave
+            scene.add(ambientLightGlobal);
+
             // Agregar una luz direccional para dar un brillo más dinámico al planeta
             const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-            directionalLight.position.set(1, 1, 1).normalize(); // Posición de la luz direccional
+            directionalLight.position.set(5, 5, 5).normalize(); // Posición de la luz direccional
             scene.add(directionalLight);
 
             // Cargar texturas
             const textureLoader = new THREE.TextureLoader();
             const planetTexture = textureLoader.load('modelo/textures/Planet_baseColor.png'); // Textura del planeta
             const cloudsTexture = textureLoader.load('modelo/textures/Clouds_baseColor.png'); // Textura de las nubes
+            const planetMaterial = new THREE.MeshStandardMaterial({
+            map: planetTexture,
+            roughness: 0.4, // Menos rugoso
+            metalness: 0.1, // Un poco metálico
+            emissive: new THREE.Color(0x00ffff) // Emisión de color si lo deseas
+        });
+
+        const exposure = 1.5;  // Ajusta esto para obtener un brillo mayor
+        renderer.toneMappingExposure = exposure;
+
+        const planetGeometry = new THREE.SphereGeometry(5, 32, 32);
+        const planetMesh = new THREE.Mesh(planetGeometry, planetMaterial);
+        scene.add(planetMesh);
 
             // Cargar el modelo 3D del planeta (GLTF)
             const loader = new THREE.GLTFLoader();
