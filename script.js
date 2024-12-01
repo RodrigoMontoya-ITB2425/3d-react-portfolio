@@ -154,8 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
     // Establecer el tamaño del renderizador
-    const canvas = document.getElementById('gltf-canvas');
-    renderer.setSize(600, 400); // Ajusta el tamaño al contenedor
+    renderer.setSize(600, 600); // Ajustamos el tamaño para encajar en el cuadro azul
     renderer.setClearColor(0x000000, 0); // Fondo transparente
 
     // Agregar el renderizador al contenedor del GLTF
@@ -174,7 +173,15 @@ document.addEventListener("DOMContentLoaded", function () {
         'pc/pc.gltf', // Ruta correcta al modelo GLTF
         function (gltf) {
             // Añadir el modelo cargado a la escena
-            scene.add(gltf.scene);
+            const model = gltf.scene;
+            scene.add(model);
+
+            // Escalar el modelo para hacerlo más pequeño
+            model.scale.set(0.5, 0.5, 0.5); // Ajusta estos valores si es necesario
+
+            // Centrar el modelo (ajustar la posición si es necesario)
+            model.position.set(0, 0, 0);
+
             console.log('Modelo GLTF cargado correctamente');
         },
         undefined,
@@ -186,56 +193,26 @@ document.addEventListener("DOMContentLoaded", function () {
     // Posicionar la cámara
     camera.position.set(0, 1, 5);
 
+    // Crear controles de órbita para permitir la rotación con el ratón
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = true; // Habilitar el zoom si lo deseas
+
     // Ajustar la ventana al redimensionar
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(600, 400); // Mantener tamaño fijo
+        renderer.setSize(window.innerWidth, window.innerHeight);
     });
-
-    // Variables para la rotación con el ratón
-    let isDragging = false;
-    let previousMousePosition = { x: 0, y: 0 };
 
     // Función de animación
     function animate() {
         requestAnimationFrame(animate);
 
-        // Rotar el modelo para la animación
-        if (scene.children.length > 1) { // Asegurarse de que el modelo se haya cargado
-            scene.children[1].rotation.y += 0.01; // Rota el modelo alrededor del eje Y
-        }
-
+        // Renderizar la escena
         renderer.render(scene, camera);
     }
 
     // Iniciar la animación
     animate();
-
-    // Rotar con el ratón
-    canvas.addEventListener('mousedown', (event) => {
-        isDragging = true;
-    });
-
-    canvas.addEventListener('mousemove', (event) => {
-        if (isDragging) {
-            const deltaX = event.clientX - previousMousePosition.x;
-            const deltaY = event.clientY - previousMousePosition.y;
-
-            // Rotación de la escena según el movimiento del ratón
-            scene.rotation.y += deltaX * 0.005; // Ajuste de la rotación
-            scene.rotation.x += deltaY * 0.005; // Ajuste de la rotación
-
-            previousMousePosition = { x: event.clientX, y: event.clientY };
-        }
-    });
-
-    canvas.addEventListener('mouseup', () => {
-        isDragging = false;
-    });
-
-    canvas.addEventListener('mouseleave', () => {
-        isDragging = false;
-    });
 });
 
