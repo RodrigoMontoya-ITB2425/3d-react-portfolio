@@ -164,3 +164,54 @@ document.addEventListener("DOMContentLoaded", function() {
         "retina_detect": true
     });
 });
+
+// Asegurarse de que el DOM está completamente cargado antes de ejecutar
+document.addEventListener("DOMContentLoaded", function () {
+    // Configuración básica de Three.js
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    
+    // Estilo y tamaño del renderizador
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0); // Fondo transparente
+    const gltfContainer = document.getElementById('gltf-animation');
+    gltfContainer.appendChild(renderer.domElement);
+
+    // Iluminación
+    const light = new THREE.AmbientLight(0xffffff, 1);
+    scene.add(light);
+
+    // Cargar el modelo GLTF
+    const loader = new THREE.GLTFLoader();
+    loader.load(
+        './pc/pc.gltf', // Ruta correcta al modelo GLTF
+        function (gltf) {
+            // Añadir modelo a la escena
+            scene.add(gltf.scene);
+            console.log('Modelo GLTF cargado correctamente');
+        },
+        undefined,
+        function (error) {
+            console.error('Error al cargar el modelo GLTF:', error);
+        }
+    );
+
+    // Posicionar la cámara
+    camera.position.set(0, 1, 5);
+
+    // Ajustar la ventana al redimensionar
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Animar la escena
+    function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    }
+
+    animate();
+});
