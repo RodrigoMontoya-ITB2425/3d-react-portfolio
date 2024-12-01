@@ -62,7 +62,7 @@
             const loader = new THREE.GLTFLoader();
             let planet;
 
-            loader.load('path_to_your_model/planet.gltf', (gltf) => {
+            loader.load('modelo/planet.gltf', (gltf) => {
                 planet = gltf.scene;
                 planet.scale.set(1.5, 1.5, 1.5); // Reducir el tamaño del planeta
                 planet.position.set(0, 0, 0); // Centrado en la escena
