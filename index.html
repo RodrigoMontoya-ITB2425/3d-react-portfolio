@@ -38,7 +38,7 @@
             </div>
             <div class="home-img">
                 
-                <div id="planet-container" style="width: 100%; height: 500px;"></div>
+                <div id="planet-container" style="width: 100%; height: 500px; margin: 0 auto; display: block;"></div>
             </div>
         </section>
 
@@ -58,9 +58,23 @@
             const loader = new THREE.GLTFLoader();
             let planet;
 
-            loader.load('modelo/planet.gltf', (gltf) => {
+            loader.load('path_to_your_model/planet.gltf', (gltf) => {
                 planet = gltf.scene;
-                planet.scale.set(2, 2, 2);  // Ajusta el tamaño del planeta
+                planet.scale.set(1.5, 1.5, 1.5);  // Reducir el tamaño del planeta
+                planet.position.set(0, 0, 0);  // Centrado en la escena
+
+                // Cambiar el material del planeta para colores más vivos
+                planet.traverse((child) => {
+                    if (child.isMesh) {
+                        child.material = new THREE.MeshStandardMaterial({
+                            color: 0xaaaaaa, // Un color más brillante
+                            emissive: 0x555555, // Brillo para hacerlo más vivo
+                            roughness: 0.3,
+                            metalness: 0.5,
+                        });
+                    }
+                });
+
                 scene.add(planet);
             }, undefined, (error) => {
                 console.error('Error al cargar el modelo GLTF:', error);
@@ -78,7 +92,7 @@
             }
 
             // Ajustar la cámara
-            camera.position.z = 5;
+            camera.position.z = 3;  // Acercar la cámara para ver el planeta más grande
 
             animate();
 
@@ -86,9 +100,8 @@
             window.addEventListener('resize', () => {
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, 500);
-                });
-
+                renderer.setSize(window.innerWidth, 500);
+            });
         </script>
         
         <section class="about" id="about">
