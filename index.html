@@ -9,7 +9,8 @@
         <link rel="stylesheet" type="text/css" href="style.css">
         <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/loaders/GLTFLoader.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
     </head>
     <body>
 
@@ -326,75 +327,29 @@ canvas.addEventListener('mousemove', (event) => {
           <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
           <script src="script.js"></script>
           <script>
-            particlesJS('particles-js', {
-              particles: {
-                number: {
-                  value: 150, // Número de partículas
-                  density: {
-                    enable: true,
-                    value_area: 800
-                  }
-                },
-                color: {
-                  value: "#ffffff" // Color blanco para las estrellas
-                },
-                shape: {
-                  type: "circle", // Las partículas serán círculos
-                  stroke: {
-                    width: 0,
-                    color: "#000000"
-                  }
-                },
-                opacity: {
-                  value: 0.5,
-                  random: true,
-                  anim: {
-                    enable: true,
-                    speed: 1,
-                    opacity_min: 0.1,
-                    sync: false
-                  }
-                },
-                size: {
-                  value: 3,
-                  random: true,
-                  anim: {
-                    enable: true,
-                    speed: 3,
-                    size_min: 0.1,
-                    sync: false
-                  }
-                },
-                move: {
-                  enable: true,
-                  speed: 0.5, // Velocidad de las partículas
-                  direction: "none", // Dirección aleatoria
-                  random: true,
-                  straight: false,
-                  out_mode: "out",
-                  bounce: false,
-                  attract: {
-                    enable: false,
-                    rotateX: 600,
-                    rotateY: 1200
-                  }
-                }
-              },
-              interactivity: {
-                detect_on: "canvas",
-                events: {
-                  onhover: {
-                    enable: true,
-                    mode: "repulse"
-                  },
-                  onclick: {
-                    enable: true,
-                    mode: "push"
-                  }
-                }
-              },
-              retina_detect: true
-            });
+            particlesJS("particles-js", {
+  "particles": {
+    "number": {
+      "value": 80
+    },
+    "size": {
+      "value": 3
+    },
+    "move": {
+      "enable": true,
+      "speed": 1
+    }
+  },
+  "interactivity": {
+    "events": {
+      "onhover": {
+        "enable": true,
+        "mode": "repulse"
+      }
+    }
+  }
+});
+
           </script>
     </body>
 </html>
