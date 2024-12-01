@@ -146,3 +146,65 @@ document.addEventListener("DOMContentLoaded", function () {
         "retina_detect": true
     });
 });
+
+// Asegurarse de que el DOM está completamente cargado antes de ejecutar
+document.addEventListener("DOMContentLoaded", function () {
+    // Configuración básica de Three.js
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    
+    // Establecer el tamaño del renderizador
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0); // Fondo transparente
+    
+    // Agregar el renderizador al contenedor del GLTF
+    const gltfContainer = document.getElementById('gltf-animation');
+    if (gltfContainer) {
+        gltfContainer.appendChild(renderer.domElement);
+    }
+
+    // Iluminación ambiental
+    const light = new THREE.AmbientLight(0xffffff, 1); // Luz blanca suave
+    scene.add(light);
+
+    // Cargar el modelo GLTF
+    const loader = new THREE.GLTFLoader();
+    loader.load(
+        'pc/pc.gltf', // Ruta correcta al modelo GLTF
+        function (gltf) {
+            // Añadir el modelo cargado a la escena
+            scene.add(gltf.scene);
+            console.log('Modelo GLTF cargado correctamente');
+        },
+        undefined,
+        function (error) {
+            console.error('Error al cargar el modelo GLTF:', error);
+        }
+    );
+
+    // Posicionar la cámara
+    camera.position.set(0, 1, 5);
+
+    // Ajustar la ventana al redimensionar
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Función de animación
+    function animate() {
+        requestAnimationFrame(animate);
+
+        // Rotar el modelo para la animación
+        if (scene.children.length > 1) { // Asegurarse de que el modelo se haya cargado
+            scene.children[1].rotation.y += 0.01; // Rota el modelo alrededor del eje Y
+        }
+
+        renderer.render(scene, camera);
+    }
+
+    // Iniciar la animación
+    animate();
+});
