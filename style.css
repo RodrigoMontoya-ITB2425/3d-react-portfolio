@@ -13,8 +13,8 @@
  }
 
  :root {
-    --bg-color:#1f242d;
-    --second-bg-color:#323946;
+    --background-color: rgb(5, 8, 22);
+    --second-bg-color: rgb(15, 18, 32);
     --text-color:#fff;
     --main-color:#0ef; 
  }
