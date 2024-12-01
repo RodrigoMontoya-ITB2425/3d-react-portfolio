@@ -541,6 +541,10 @@ html, body {
     border-radius: 1rem;
     margin-bottom: 4rem;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 100%; 
+    max-width: 600px; 
+    height: 400px; 
+    margin: 0 auto; 
 }
 
 #specs h2 {

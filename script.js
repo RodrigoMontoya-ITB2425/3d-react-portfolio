@@ -147,17 +147,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// Asegurarse de que el DOM está completamente cargado antes de ejecutar
 document.addEventListener("DOMContentLoaded", function () {
     // Configuración básica de Three.js
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    
+
     // Establecer el tamaño del renderizador
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    const canvas = document.getElementById('gltf-canvas');
+    renderer.setSize(600, 400); // Ajusta el tamaño al contenedor
     renderer.setClearColor(0x000000, 0); // Fondo transparente
-    
+
     // Agregar el renderizador al contenedor del GLTF
     const gltfContainer = document.getElementById('gltf-animation');
     if (gltfContainer) {
@@ -190,8 +190,12 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(600, 400); // Mantener tamaño fijo
     });
+
+    // Variables para la rotación con el ratón
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
 
     // Función de animación
     function animate() {
@@ -207,4 +211,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Iniciar la animación
     animate();
+
+    // Rotar con el ratón
+    canvas.addEventListener('mousedown', (event) => {
+        isDragging = true;
+    });
+
+    canvas.addEventListener('mousemove', (event) => {
+        if (isDragging) {
+            const deltaX = event.clientX - previousMousePosition.x;
+            const deltaY = event.clientY - previousMousePosition.y;
+
+            // Rotación de la escena según el movimiento del ratón
+            scene.rotation.y += deltaX * 0.005; // Ajuste de la rotación
+            scene.rotation.x += deltaY * 0.005; // Ajuste de la rotación
+
+            previousMousePosition = { x: event.clientX, y: event.clientY };
+        }
+    });
+
+    canvas.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+        isDragging = false;
+    });
 });
+
