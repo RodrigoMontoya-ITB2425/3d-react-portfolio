@@ -545,6 +545,7 @@ html, body {
     max-width: 600px; 
     height: 400px; 
     margin: 0 auto; 
+    top: -20px;
 }
 
 #specs h2 {
